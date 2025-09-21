@@ -1,3 +1,5 @@
+"use client"
+
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -140,7 +142,7 @@ export default function ShortlistPage() {
                         </div>
                       </div>
                       <p className="text-lg text-muted-foreground mb-2">{candidate.position}</p>
-                      <Badge className={getStatusColor(candidate.status)} className="mb-3">
+                      <Badge className={`${getStatusColor(candidate.status)} mb-3`}>
                         {candidate.status}
                       </Badge>
                     </div>

@@ -23,7 +23,13 @@ export interface PlacementUser extends User {
   role: "placement"
   organization: string
   orgRole: string
+  location?: string
+  company?: string
+  specializations?: string[]
 }
+
+// Optional: create Recruiter alias
+export type Recruiter = PlacementUser
 
 // Mock authentication - in real app this would connect to backend
 export const mockUsers: (Student | PlacementUser)[] = [
@@ -88,30 +94,40 @@ export const signup = (userData: {
 }): Student | PlacementUser | null => {
   // Check if user already exists
   const existingUser = mockUsers.find((u) => u.email === userData.email)
-  if (existingUser) {
-    return null // User already exists
-  }
+  if (existingUser) return null
 
-  const newUser: Student | PlacementUser = {
-    id: (mockUsers.length + 1).toString(),
-    name: userData.name,
-    firstName: userData.firstName,
-    lastName: userData.lastName,
-    email: userData.email,
-    phone: userData.phone,
-    role: userData.role,
-    ...(userData.role === "student"
-      ? {
-          degree: userData.degree || "B.Tech",
-          branch: userData.branch || "Computer Science",
-          gradYear: userData.gradYear || 2024,
-          location: userData.location || "Bangalore",
-          skills: [],
-        }
-      : {
-          organization: userData.organization || "Company",
-          orgRole: userData.orgRole || "Recruiter",
-        }),
+  let newUser: Student | PlacementUser
+
+  if (userData.role === "student") {
+    newUser = {
+      id: (mockUsers.length + 1).toString(),
+      name: userData.name,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      phone: userData.phone,
+      role: "student",
+      degree: userData.degree || "B.Tech",
+      branch: userData.branch || "Computer Science",
+      gradYear: userData.gradYear || 2024,
+      location: userData.location || "Bangalore",
+      skills: [],
+    }
+  } else {
+    newUser = {
+      id: (mockUsers.length + 1).toString(),
+      name: userData.name,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      phone: userData.phone,
+      role: "placement",
+      organization: userData.organization || "Company",
+      orgRole: userData.orgRole || "Recruiter",
+      location: userData.location,
+      company: userData.organization,
+      specializations: [],
+    }
   }
 
   mockUsers.push(newUser)

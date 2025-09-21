@@ -1,3 +1,5 @@
+"use client"
+
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { MetricCard } from "@/components/student/metric-card"
 import { ApplicationStatusChart } from "@/components/student/application-status-chart"
@@ -15,7 +17,9 @@ export default function StudentDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Student Dashboard</h1>
-            <p className="text-muted-foreground">Track your applications and discover new opportunities</p>
+            <p className="text-muted-foreground">
+              Track your applications and discover new opportunities
+            </p>
           </div>
           <div className="text-right">
             <div className="text-sm text-muted-foreground">Last updated</div>
@@ -47,30 +51,31 @@ export default function StudentDashboard() {
             subtitle="Success rate"
             icon={Target}
             trend={{ value: 5, isPositive: true }}
-            className="bg-purple-500 text-white"
+            className="bg-amber-500 text-white"
           />
           <MetricCard
-            title="Skill Match Avg"
-            value="84%"
-            subtitle="Job compatibility"
+            title="Profile Views"
+            value={120}
+            subtitle="This week"
             icon={TrendingUp}
             trend={{ value: 12, isPositive: true }}
-            className="bg-orange-500 text-white"
+            className="bg-purple-500 text-white"
           />
         </div>
 
-        {/* Charts Row */}
+        {/* Charts and Lists */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ApplicationStatusChart />
           <SkillMatchRadar />
         </div>
 
-        {/* Applications, Recommendations, and Live Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <RecentApplications />
           <JobRecommendations />
-          <LiveActivityFeed />
         </div>
+
+        {/* Live Activity Feed */}
+        <LiveActivityFeed />
       </div>
     </DashboardLayout>
   )

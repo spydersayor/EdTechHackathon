@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect, useRef } from "react"
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,10 +11,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User, Building, Plus, X, Users } from "lucide-react"
-import { getCurrentUser, type Recruiter } from "@/lib/auth"
+import { getCurrentUser, type PlacementUser } from "@/lib/auth"
 
 export default function RecruiterProfilePage() {
-  const [user, setUser] = useState<Recruiter | null>(null)
+  const [user, setUser] = useState<PlacementUser | null>(null)
   const [specializations, setSpecializations] = useState<string[]>([])
   const [newSpecialization, setNewSpecialization] = useState("")
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
@@ -23,8 +22,8 @@ export default function RecruiterProfilePage() {
 
   useEffect(() => {
     const currentUser = getCurrentUser()
-    if (currentUser && currentUser.role === "recruiter") {
-      setUser(currentUser as Recruiter)
+    if (currentUser && currentUser.role === "placement") { // ✅ fixed role check
+      setUser(currentUser as PlacementUser)
       setSpecializations(currentUser.specializations || ["Software Engineering", "Data Science", "Product Management"])
     }
   }, [])
@@ -41,9 +40,7 @@ export default function RecruiterProfilePage() {
     }
   }
 
-  const triggerFileInput = () => {
-    fileInputRef.current?.click()
-  }
+  const triggerFileInput = () => fileInputRef.current?.click()
 
   const addSpecialization = () => {
     if (newSpecialization.trim() && !specializations.includes(newSpecialization.trim())) {
@@ -58,7 +55,7 @@ export default function RecruiterProfilePage() {
 
   if (!user) {
     return (
-      <DashboardLayout userRole="recruiter">
+      <DashboardLayout userRole="placement">
         <div className="p-6 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-xl font-semibold text-foreground">Loading profile...</h2>
@@ -69,7 +66,7 @@ export default function RecruiterProfilePage() {
   }
 
   return (
-    <DashboardLayout userRole="recruiter">
+    <DashboardLayout userRole="placement">
       <div className="p-6 max-w-4xl mx-auto space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Recruiter Profile</h1>
@@ -85,50 +82,42 @@ export default function RecruiterProfilePage() {
           <CardContent className="space-y-6">
             <div className="flex items-center space-x-6">
               <Avatar className="h-24 w-24">
-                <AvatarImage src={profilePhoto || user.avatar || "/placeholder.svg?height=96&width=96"} />
+                <AvatarImage src={profilePhoto || user?.avatar || "/placeholder.svg?height=96&width=96"} />
                 <AvatarFallback>
                   <User className="h-12 w-12" />
                 </AvatarFallback>
               </Avatar>
               <div>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handlePhotoUpload}
-                  accept="image/*"
-                  className="hidden"
-                />
-                <Button variant="outline" onClick={triggerFileInput}>
-                  Change Photo
-                </Button>
+                <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
+                <Button variant="outline" onClick={triggerFileInput}>Change Photo</Button>
                 <p className="text-sm text-muted-foreground mt-2">JPG, GIF or PNG. 1MB max.</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-foreground">
-                  First Name
-                </Label>
-                <Input id="firstName" defaultValue={user.firstName} className="text-foreground" />
+                <Label htmlFor="firstName" className="text-foreground">First Name</Label>
+                <Input id="firstName" defaultValue={user?.firstName ?? ""} className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-foreground">
-                  Last Name
-                </Label>
-                <Input id="lastName" defaultValue={user.lastName} className="text-foreground" />
+                <Label htmlFor="lastName" className="text-foreground">Last Name</Label>
+                <Input id="lastName" defaultValue={user?.lastName ?? ""} className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">
-                  Email
-                </Label>
-                <Input id="email" type="email" defaultValue={user.email} className="text-foreground" />
+                <Label htmlFor="email" className="text-foreground">Email</Label>
+                <Input id="email" type="email" defaultValue={user?.email ?? ""} className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-foreground">
-                  Phone
-                </Label>
-                <Input id="phone" defaultValue={user.phone} className="text-foreground" />
+                <Label htmlFor="phone" className="text-foreground">Phone</Label>
+                <Input id="phone" defaultValue={user?.phone ?? ""} className="text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="location" className="text-foreground">Location</Label>
+                <Input id="location" defaultValue={user?.location ?? ""} className="text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="company" className="text-foreground">Company Name</Label>
+                <Input id="company" defaultValue={user?.company ?? user?.organization ?? ""} className="text-foreground" />
               </div>
             </div>
           </CardContent>
@@ -146,40 +135,20 @@ export default function RecruiterProfilePage() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="company" className="text-foreground">
-                  Company Name
-                </Label>
-                <Input id="company" defaultValue={user.company} className="text-foreground" />
+                <Label htmlFor="position" className="text-foreground">Your Position</Label>
+                <Input id="position" defaultValue={user?.orgRole ?? ""} className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="position" className="text-foreground">
-                  Your Position
-                </Label>
-                <Input id="position" defaultValue="Senior Talent Acquisition Manager" className="text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="department" className="text-foreground">
-                  Department
-                </Label>
+                <Label htmlFor="department" className="text-foreground">Department</Label>
                 <Input id="department" defaultValue="Human Resources" className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="companySize" className="text-foreground">
-                  Company Size
-                </Label>
+                <Label htmlFor="companySize" className="text-foreground">Company Size</Label>
                 <Input id="companySize" defaultValue="1000-5000 employees" className="text-foreground" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="industry" className="text-foreground">
-                  Industry
-                </Label>
+                <Label htmlFor="industry" className="text-foreground">Industry</Label>
                 <Input id="industry" defaultValue="Technology" className="text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-foreground">
-                  Location
-                </Label>
-                <Input id="location" defaultValue={user.location} className="text-foreground" />
               </div>
             </div>
           </CardContent>
@@ -199,10 +168,7 @@ export default function RecruiterProfilePage() {
               {specializations.map((spec) => (
                 <Badge key={spec} variant="secondary" className="flex items-center gap-1">
                   {spec}
-                  <button
-                    onClick={() => removeSpecialization(spec)}
-                    className="ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full p-0.5"
-                  >
+                  <button onClick={() => removeSpecialization(spec)} className="ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full p-0.5">
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
@@ -213,7 +179,7 @@ export default function RecruiterProfilePage() {
                 placeholder="Add a specialization..."
                 value={newSpecialization}
                 onChange={(e) => setNewSpecialization(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && addSpecialization()}
+                onKeyDown={(e) => e.key === "Enter" && addSpecialization()}
                 className="text-foreground"
               />
               <Button onClick={addSpecialization} variant="outline">
@@ -246,22 +212,16 @@ export default function RecruiterProfilePage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="linkedin" className="text-foreground">
-                LinkedIn
-              </Label>
+              <Label htmlFor="linkedin" className="text-foreground">LinkedIn</Label>
               <Input id="linkedin" placeholder="https://linkedin.com/in/yourprofile" className="text-foreground" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="calendly" className="text-foreground">
-                Calendly/Scheduling Link
-              </Label>
+              <Label htmlFor="calendly" className="text-foreground">Calendly/Scheduling Link</Label>
               <Input id="calendly" placeholder="https://calendly.com/yourname" className="text-foreground" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="workEmail" className="text-foreground">
-                Work Email
-              </Label>
-              <Input id="workEmail" type="email" defaultValue={user.email} className="text-foreground" />
+              <Label htmlFor="workEmail" className="text-foreground">Work Email</Label>
+              <Input id="workEmail" type="email" defaultValue={user?.email ?? ""} className="text-foreground" />
             </div>
           </CardContent>
         </Card>
