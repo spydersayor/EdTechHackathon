@@ -1,0 +1,13 @@
+Lecture 2: Basics of Machine Learning
+
+Machine Learning (ML) is a subset of AI focused on algorithms that learn patterns from data.
+Key concepts:
+- Training data
+- Features
+- Labels
+- Model evaluation
+
+Types of ML:
+- Supervised learning
+- Unsupervised learning
+- Reinforcement learning

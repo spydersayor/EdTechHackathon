@@ -1,0 +1,258 @@
+Q: What is the difference between AI and ML?
+A: AI is a broad concept of machines simulating intelligence, while ML is a subset focused on learning from data.
+
+Q: What are embeddings?
+A: Embeddings are vector representations of text or other data that capture semantic meaning.
+
+Q: What is FAISS?
+A: FAISS is a library by Facebook AI Research for efficient similarity search and clustering of dense vectors.
+
+1. What are Python’s key features compared to other programming languages?
+Interpreted: No need for compilation; Python executes line by line.
+
+
+High-level: Programmer-friendly with simple syntax.
+
+
+Dynamically Typed: No need to declare variable types (x = 10, x = "hello" works).
+
+
+Object-Oriented: Everything in Python is an object.
+
+
+Extensive Libraries: Comes with built-in modules (math, os, json, etc.).
+
+
+Cross-platform: Works on Windows, Linux, Mac, etc.
+2. Difference between deep copy and shallow copy
+Shallow Copy: Copies the outer object, but nested objects still point to the same reference.
+
+
+Deep Copy: Creates a completely independent copy, including nested objects.
+3. Python’s data types (mutable vs immutable)
+Immutable: int, float, bool, str, tuple, frozenset.
+
+
+Mutable: list, dict, set, bytearray.
+ Immutable types cannot be changed in place, new objects are created instead.
+4. How is memory management handled in Python?
+Reference Counting: Python keeps track of how many references an object has.
+
+
+Garbage Collector: Removes objects with zero references.
+
+
+Private Heap: All objects and data structures are stored in a private heap managed by Python.
+5. Difference between @staticmethod, @classmethod, and instance methods
+Instance Method: First argument is self, works on object instance.
+
+
+Class Method: First argument is cls, works on class itself.
+
+
+Static Method: No default arguments, just a normal function inside a class.
+6. Difference between abstraction and encapsulation
+Encapsulation: Hiding internal state of an object (using private variables, _var).
+
+
+Abstraction: Hiding implementation details and showing only necessary features (using abstract classes/interfaces).
+7. Multiple Inheritance in Python
+A class can inherit from more than one parent.
+
+
+Can cause diamond problem (confusion in method resolution).
+
+
+Python resolves this using MRO (Method Resolution Order).
+8. Difference between module, package, and library
+Module: Single .py file with Python code.
+
+
+Package: Directory with multiple modules + __init__.py.
+
+
+Library: Collection of packages and modules (like NumPy, Pandas).
+9. How does Python import a module?
+Python checks in this order:
+
+
+Built-in modules
+
+
+Current directory
+
+
+Directories in PYTHONPATH
+
+
+Installed site-packages
+10. Role of __init__.py
+Marks a directory as a Python package.
+
+
+Can contain initialization code for the package.
+11. Iterators vs Generators
+Iterator: Any object with __iter__() and __next__() methods.
+
+
+Generator: Function that uses yield to produce values lazily.
+
+
+def my_gen():
+    yield 1
+    yield 2
+print(list(my_gen()))
+12. What is Python? Why is it popular?
+Python is a high-level, interpreted, general-purpose programming language.
+
+
+Popular because of:
+
+
+Easy-to-read syntax (looks like English).
+
+
+Large community support.
+
+
+Rich standard libraries.
+
+
+Used in web dev, AI, data science, automation, scripting.
+
+
+
+
+
+13. How is Python an interpreted language?
+Python code is executed line by line by the Python interpreter.
+
+
+Unlike compiled languages (C, C++), Python does not need to be compiled before running.
+14.  Advantages & Disadvantages of Python
+  Advantages:
+Easy syntax, portable, cross-platform.
+
+
+Huge libraries for everything.
+
+
+Strong community.
+ Disadvantages:
+Slower than C/C++ because it’s interpreted.
+
+
+High memory usage.
+
+
+Not great for mobile app development.
+15. Built-in data types?
+Numbers: int, float, complex
+
+
+Sequence: str, list, tuple
+
+
+Mapping: dict
+
+
+Set types: set, frozenset
+
+
+Boolean: bool
+
+
+Special: NoneType
+
+
+16. Difference between None, False, and 0?
+None → absence of value.
+
+
+False → Boolean false.
+
+
+0 → integer zero (treated as False in conditions, but different type).
+17. Difference between is and ==?
+== → compares values.
+
+
+is → checks if two objects have the same memory address.
+a = [1,2,3]
+b = [1,2,3]
+print(a == b)  # True (values same)
+print(a is b)  # False (different objects)
+18.  Why are strings immutable?
+Strings are stored in memory in a way that makes them immutable → prevents accidental modifications and improves performance (reused in memory).
+19. "".join() vs + for concatenation?
+"".join(list_of_strings) is faster and more memory-efficient for large concatenations.
+
+
++ creates a new string every time (slower).
+
+
+20. Difference between list and tuple?
+List → mutable, slower, [ ].
+
+
+Tuple → immutable, faster, ( ).
+21. What happens if you use a list as a dict key?
+Error → because lists are mutable and unhashable.
+22. dict.get() vs dict[]?
+d = {"a":1}
+print(d.get("b"))   # None (safe)
+print(d["b"])       # KeyError
+23. What are *args and **kwargs?
+*args → variable length positional arguments.
+
+
+**kwargs → variable length keyword arguments.
+24. Variable Scope?
+Local → inside function.
+
+
+Global → declared outside.
+
+
+Nonlocal → used inside nested functions (not local, not global).
+25. Error Handling
+raise vs assert?
+raise → manually trigger exception.
+
+
+assert → check condition, raise AssertionError if false.
+26. Difference between read(), readline(), readlines()?
+read() → reads entire file.
+
+
+readline() → reads one line.
+
+
+readlines() → reads all lines into a list.
+27. What does with do in file handling?
+Automatically closes the file after use.
+with open("file.txt") as f:
+    data = f.read()
+28.  What is __init__ method?
+Constructor, runs automatically when object is created.
+class Car:
+    def __init__(self, brand):
+        self.brand = brand
+29.  Instance vs Class Variables?
+Instance variable → unique to each object.
+
+
+Class variable → shared across all objects.
+
+
+29. What is Inheritance?
+Mechanism to create a new class using existing class properties & methods.
+Promotes code reusability.
+
+
+class Animal:
+    def speak(self):
+        print("Animal speaks")
+class Dog(Animal):
+    def speak(self):
+        print("Bark")

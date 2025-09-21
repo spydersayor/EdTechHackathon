@@ -1,0 +1,5 @@
+Week 1 Notes:
+- Installed Python and libraries
+- Learned basics of numpy and pandas
+- Introduction to Jupyter notebooks
+- Explored simple linear regression
