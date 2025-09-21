@@ -1,0 +1,32 @@
+
+---
+
+# 📄 Final `.gitignore`
+
+```gitignore
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# FAISS index (ignore if rebuilding in space)
+*.faiss
+*.pkl
+
+# VSCode / IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# HuggingFace cache
+~/.cache/huggingface/
